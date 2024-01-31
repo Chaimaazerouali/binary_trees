@@ -8,19 +8,6 @@
 */
 size_t binary_tree_depth(const binary_tree_t *tree)
 {
-size_t depth = 0;
-
-/* Check if tree is NULL, return 0 in this case */
-if (tree == NULL)
-return 0;
-
-/* Traverse up the tree until the root is reached, counting the depth */
-while (tree->parent != NULL)
-{
-depth++;
-tree = tree->parent;
-}
-
-return depth;
+return ((tree && tree->parent) ? 1 + binary_tree_depth(tree->parent) : 0);
 }
 
