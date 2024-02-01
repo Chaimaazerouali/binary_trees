@@ -1,4 +1,6 @@
 #include "binary_trees.h"
+#include <stdlib.h>
+#include <stdio.h>
 
 /**
 * binary_tree_is_complete - Checks if a binary tree is complete
@@ -8,50 +10,43 @@
 */
 int binary_tree_is_complete(const binary_tree_t *tree)
 {
-int is_full = binary_tree_is_full(tree);
-
 if (tree == NULL)
 return (0);
 
-if (is_full)
-return (1);
+/* Initialize a queue for level order traversal */
+binary_tree_t **queue = malloc(sizeof(binary_tree_t *) * 1024);
+if (queue == NULL)
+return (0);
 
+int front = 0, rear = 0;
+int null_seen = 0;
+
+queue[rear++] = (binary_tree_t *)tree;
+
+while (rear - front > 0)
+{
+binary_tree_t *current = queue[front++];
+
+/* Check for null nodes */
+if (current == NULL)
+null_seen = 1;
+else
+{
+/* If a null node was seen previously, the tree is not complete */
+if (null_seen)
+{
+free(queue);
 return (0);
 }
 
-/**
-* binary_tree_is_full - Checks if a binary tree is full
-* @tree: Pointer to the root node of the tree to check
-*
-* Return: 1 if the tree is full, 0 otherwise
-*/
-int binary_tree_is_full(const binary_tree_t *tree)
-{
-if (tree == NULL)
-return (1);
-
-if (binary_tree_height(tree->left) != binary_tree_height(tree->right))
-return (0);
-
-return (binary_tree_is_full(tree->left) && binary_tree_is_full(tree->right));
+/* Enqueue left and right children */
+queue[rear++] = current->left;
+queue[rear++] = current->right;
+}
 }
 
-/**
-* binary_tree_height - Calculates the height of a binary tree
-* @tree: Pointer to the root node of the tree
-*
-* Return: Height of the tree
-*/
-size_t binary_tree_height(const binary_tree_t *tree)
-{
-size_t left_height, right_height;
-
-if (tree == NULL)
-return (0);
-
-left_height = binary_tree_height(tree->left);
-right_height = binary_tree_height(tree->right);
-
-return (1 + (left_height > right_height ? left_height : right_height));
+/* If the loop completes, the tree is complete */
+free(queue);
+return (1);
 }
 
