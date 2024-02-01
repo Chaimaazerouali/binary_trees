@@ -26,23 +26,3 @@ binary_tree_is_perfect(tree->right));
 
 return (0);
 }
-
-/**
-* binary_tree_depth - Calculates the depth of a binary tree
-* @tree: Pointer to the root node of the tree
-*
-* Return: Depth of the tree
-*/
-size_t binary_tree_depth(const binary_tree_t *tree)
-{
-size_t depth = 0;
-
-while (tree != NULL)
-{
-depth++;
-tree = tree->left;
-}
-
-return (depth);
-}
-
