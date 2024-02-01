@@ -59,5 +59,4 @@ second = second->parent;
 }
 
 return (NULL);
-}}
-
+}
