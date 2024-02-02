@@ -21,7 +21,7 @@ if (*tree == NULL)
 return (*tree);
 }
 
-/* If the value is less than the current node's value, insert into the left subtree */
+/* If the value is less than the current value, insert into the left subtree */
 if (value < (*tree)->n)
 {
 /* If the left child is NULL, create a new node and return it */
